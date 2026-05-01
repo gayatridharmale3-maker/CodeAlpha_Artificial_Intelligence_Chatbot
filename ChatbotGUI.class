@@ -1,0 +1,67 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+public class ChatbotGUI extends JFrame {
+   private JTextArea chatDisplay;
+   private JTextField userInputField;
+   private JButton sendButton;
+   private ChatbotEngine engine = new ChatbotEngine();
+
+   public ChatbotGUI() {
+      this.setupLayout();
+   }
+
+   private void setupLayout() {
+      this.setTitle("AI Chatbot System v1.0");
+      this.setSize(450, 550);
+      this.setDefaultCloseOperation(3);
+      this.setLocationRelativeTo((Component)null);
+      this.setLayout(new BorderLayout(10, 10));
+      this.chatDisplay = new JTextArea();
+      this.chatDisplay.setEditable(false);
+      this.chatDisplay.setLineWrap(true);
+      this.chatDisplay.setWrapStyleWord(true);
+      this.chatDisplay.setFont(new Font("SansSerif", 0, 14));
+      this.chatDisplay.setBackground(new Color(245, 245, 245));
+      JScrollPane var1 = new JScrollPane(this.chatDisplay);
+      this.add(var1, "Center");
+      JPanel var2 = new JPanel(new BorderLayout(5, 5));
+      this.userInputField = new JTextField();
+      this.sendButton = new JButton("Send Message");
+      var2.add(this.userInputField, "Center");
+      var2.add(this.sendButton, "East");
+      var2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+      this.add(var2, "South");
+      ActionListener var3 = (var1x) -> this.handleChat();
+      this.sendButton.addActionListener(var3);
+      this.userInputField.addActionListener(var3);
+      this.chatDisplay.append("SYSTEM: Connection established. Type 'Hello' to begin.\n\n");
+   }
+
+   private void handleChat() {
+      String var1 = this.userInputField.getText().trim();
+      if (!var1.isEmpty()) {
+         this.chatDisplay.append("YOU: " + var1 + "\n");
+         String var2 = this.engine.generateResponse(var1);
+         this.chatDisplay.append("BOT: " + var2 + "\n\n");
+         this.userInputField.setText("");
+      }
+
+   }
+
+   public static void main(String[] var0) {
+      SwingUtilities.invokeLater(() -> (new ChatbotGUI()).setVisible(true));
+   }
+}

@@ -1,0 +1,38 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.util.HashMap;
+import java.util.Map;
+
+public class ChatbotEngine {
+   private final Map<String, String> responses = new HashMap();
+
+   public ChatbotEngine() {
+      this.initializeKnowledgeBase();
+   }
+
+   private void initializeKnowledgeBase() {
+      this.responses.put("greeting", "Hello! I am your Java AI Assistant. How can I help you today?");
+      this.responses.put("purpose", "I was created to demonstrate NLP and GUI integration in Java.");
+      this.responses.put("java", "Java is a versatile, object-oriented language used for mobile and web apps.");
+      this.responses.put("nlp", "NLP stands for Natural Language Processing—helping computers understand human speech.");
+      this.responses.put("bye", "Goodbye! Have a great day of coding!");
+   }
+
+   public String generateResponse(String var1) {
+      String var2 = var1.toLowerCase();
+      if (!var2.contains("hi") && !var2.contains("hello")) {
+         if (!var2.contains("who") && !var2.contains("what are you")) {
+            if (var2.contains("java")) {
+               return (String)this.responses.get("java");
+            } else if (!var2.contains("nlp") && !var2.contains("natural language")) {
+               return !var2.contains("bye") && !var2.contains("exit") ? "I'm still learning! Could you try asking about 'Java', 'NLP', or just say 'Hello'?" : (String)this.responses.get("bye");
+            } else {
+               return (String)this.responses.get("nlp");
+            }
+         } else {
+            return (String)this.responses.get("purpose");
+         }
+      } else {
+         return (String)this.responses.get("greeting");
+      }
+   }
+}
